@@ -226,6 +226,10 @@ public class Turn {
             {
 
             }
+            else if (hand.GetSortedDie(i) == 1 && hand.GetSortedDie(i+1) == 3)
+            {
+
+            }
             else
             {
                 return maxLength;
