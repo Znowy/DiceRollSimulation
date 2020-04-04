@@ -1,27 +1,33 @@
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Hand
 {
-    public int die1;
-    public int die2;
-    public int die3;
-    public int die4;
-    public int die5;
+    private ArrayList<Integer> handArray = new ArrayList<Integer>();
+
+    //private int numSides;
+    //private int numDice;
+    //private int numRolls;
 
     Hand()
     {
-        die1 = die2 = die3 = die4 = die5 = 1;
+        InitializeDice();
+        Roll();
+    }
+
+    public void InitializeDice()
+    {
+        for (int i = 0; i < 5; i++)
+            handArray.add(i, 1);
     }
 
     public void Roll()
     {
         Random rand = new Random();
 
-        die1 = rand.nextInt(6) + 1;
-        die2 = rand.nextInt(6) + 1;
-        die3 = rand.nextInt(6) + 1;
-        die4 = rand.nextInt(6) + 1;
-        die5 = rand.nextInt(6) + 1;
+        for (int i = 0; i < 5; i++)
+            handArray.set(i, rand.nextInt(6) + 1);
     }
 
     public void RollSelected(Boolean b1, Boolean b2, Boolean b3, Boolean b4, Boolean b5)
@@ -29,28 +35,33 @@ public class Hand
         Random rand = new Random();
 
         if (!b1)
-            die1 = rand.nextInt(6) + 1;
+            handArray.set(0, rand.nextInt(6) + 1);
         if (!b2)
-            die2 = rand.nextInt(6) + 1;
+            handArray.set(1, rand.nextInt(6) + 1);
         if (!b3)
-            die3 = rand.nextInt(6) + 1;
+            handArray.set(2, rand.nextInt(6) + 1);
         if (!b4)
-            die4 = rand.nextInt(6) + 1;
+            handArray.set(3, rand.nextInt(6) + 1);
         if (!b5)
-            die5 = rand.nextInt(6) + 1;
+            handArray.set(4, rand.nextInt(6) + 1);
     }
 
     public int GetDie(int num)
     {
-        if (num == 1)
-            return die1;
-        else if (num == 2)
-            return die2;
-        else if (num == 3)
-            return die3;
-        else if (num == 4)
-            return die4;
-        else //(num == 5)
-            return die5;
+        return handArray.get(num);
+    }
+
+    public int GetSortedDie(int num)
+    {
+        ArrayList<Integer> tempArray = new ArrayList<Integer>();
+        for (int i = 0; i < 5; i++)
+            tempArray.add(handArray.get(i));
+        Collections.sort(tempArray);
+        return tempArray.get(num);
+    }
+
+    public ArrayList<Integer> GetHand()
+    {
+        return handArray;
     }
 }
