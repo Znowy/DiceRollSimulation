@@ -1,22 +1,4 @@
-import javafx.fxml.FXMLLoader;
-import sun.management.ThreadInfoCompositeData;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.lang.Object;
-
-/**
- * This program plays one round of yahtzee This is the Yahtzee class CPSC 224,
- * Spring 2020 Programming Assignment #2 No sources to cite.
- *
- * @author Sophie Braun 2/13/19
- */
 
 public class Yahtzee {
     private static ArrayList<Element> cardList = new ArrayList<>();
@@ -78,11 +60,6 @@ public class Yahtzee {
         createScorecard(6);
     }
 
-    /**
-     * creates the scorecard in the text file and the array cardList
-     *
-     * @param sides takes the number of sides in as a param
-     */
     public static void createScorecard(int sides) {
         String name = "";
         char used = 'n';
@@ -142,28 +119,8 @@ public class Yahtzee {
         }
     }
 
-    /**
-     * changes the score in the cardList array
-     *
-     * @param SI the user choice is passed in this function
-     *
-    public static void scoreOutput(String SI) {
-        ArrayList<Integer> theScores = Turn.getScores();
-        for (int i = 0; i < cardList.size(); i++) {
-            String tester;
-            tester = cardList.get(i).getName();
-            if (SI.equals(tester)) {
-                cardList.get(i).setScore(theScores.get(i));
-                cardList.get(i).setUsed('y');
-            }
-        }
-    }*/
-
-    /**
-     * this function calculates the scorecard
-     */
     public static void calculateScoreCard() {
-        int subTotal = 0;
+        subTotal = 0;
         for (int i = 0; i < 6; i++) {
             char used = cardList.get(i).getUsed();
             if (used == 'y') {
@@ -189,42 +146,28 @@ public class Yahtzee {
         grandTotal = upperTotal + lowerTotal;
     }
 
-    /**
-     * this function prints a scorecard CHANGE TO UI
-     */
     public String[] printScoreCard() {
         String[] scoresTemp = new String[18];
         for (int i = 0; i < 6; i++)
-            scoresTemp[i] = String.format("%s                      %s", cardList.get(i).getName(), cardList.get(i).getScore());
-        scoresTemp[6] = String.format("%s         %s", "Sub Total", subTotal);
-        scoresTemp[7] = String.format("%s               %s", "Bonus", bonus);
-        scoresTemp[8] = String.format("%s      %s", "Upper Total", upperTotal);
+            scoresTemp[i] = String.format("%s", cardList.get(i).getScore());
+        scoresTemp[6] = String.format("%s", subTotal);
+        scoresTemp[7] = String.format("%s", bonus);
+        scoresTemp[8] = String.format("%s", upperTotal);
         for (int i = 6; i < 13; i++)
-            scoresTemp[i+3] = String.format("%s                      %s", cardList.get(i).getName(), cardList.get(i).getScore());
-        scoresTemp[16] = String.format("%s     %s", "Lower Total", lowerTotal);
-        scoresTemp[17] = String.format("%s      %s", "Grand Total", grandTotal);
+            scoresTemp[i+3] = String.format("%s", cardList.get(i).getScore());
+        scoresTemp[16] = String.format("%s", lowerTotal);
+        scoresTemp[17] = String.format("%s", grandTotal);
         return scoresTemp;
     }
 
-    /**
-     * @return the num of sides of the die
-     */
     public int getNumSides() {
         return 6;
     }
 
-    /**
-     * @return the number of dice
-     */
-    public static int getNumDice() {
+    public int getNumDice() {
         return 5;
     }
 
-    /**
-     * finds if all options have been used
-     *
-     * @return true if full false if not
-     */
     public boolean isFull() {
         for (int i = 0; i < cardList.size(); i++) {
             if (cardList.get(i).getUsed() == 'n') {
@@ -234,11 +177,11 @@ public class Yahtzee {
         return true;
     }
 
-    public static ArrayList<Element> getCardList() {
+    public ArrayList<Element> getCardList() {
         return cardList;
     }
 
-    public static void setCardList(ArrayList<Element> cardList) {
+    public void setCardList(ArrayList<Element> cardList) {
         Yahtzee.cardList = cardList;
     }
 }

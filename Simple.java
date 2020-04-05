@@ -44,15 +44,24 @@ public class Simple
 
     int rollCount = 0;
 
+    Color Brown;
+    Color DarkRed;
+    Color DarkGreen;
+
     Simple()
     {
         myFrame = new JFrame();
         diceButtons = new JButton[5];
 
+        Brown = new Color(60, 30, 10);
+        DarkRed = new Color(150, 0, 0);
+        DarkGreen = new Color(0, 150, 0);
+
         scorePanel = new JPanel();
-        scorePanel.setBackground(Color.gray);
+        scorePanel.setBackground(DarkRed);
         scorePanel.setPreferredSize(new Dimension(150, 600));
-        scorePanel.setLayout(new GridLayout(18, 1));
+        scorePanel.setLayout(new GridLayout(18, 2));
+        scorePanel.setBorder(BorderFactory.createLineBorder(Brown, 5));
         myFrame.add(scorePanel);
 
         organizePanel = new JPanel();
@@ -62,14 +71,15 @@ public class Simple
         myFrame.add(organizePanel);
 
         dicePanel = new JPanel();
-        dicePanel.setBackground(Color.gray);
+        dicePanel.setBackground(DarkRed);
+        dicePanel.setBorder(BorderFactory.createLineBorder(Brown, 5));
+        dicePanel.setLayout(new GridBagLayout());
         organizePanel.add(dicePanel);
 
-        scoreLabels = new JLabel[18];
+        scoreLabels = new JLabel[36];
 
         scoreBox = new JComboBox<String>();
         scoreBox.setFont(new Font("Dialog", Font.PLAIN, 25));
-        //model = new DefaultComboBoxModel<String>(scoreStrings);
 
         organizePanel.add(scoreBox);
 
@@ -94,8 +104,7 @@ public class Simple
                 {
                     hand.RollSelected(diceButtons[0].isBorderPainted(), diceButtons[1].isBorderPainted(), diceButtons[2].isBorderPainted(), diceButtons[3].isBorderPainted(), diceButtons[4].isBorderPainted());
                     UpdateHand(hand);
-                    model = new DefaultComboBoxModel<String>(yahtzee.Play(hand));
-                    scoreBox.setModel(model);
+                    UpdateScoreBox();
                     rollCount++;
                 }
             }
@@ -117,8 +126,7 @@ public class Simple
                 for(int i = 0; i < 5; i++)
                     diceButtons[i].setBorderPainted(false);
                 UpdateHand(hand);
-                model = new DefaultComboBoxModel<String>(yahtzee.GetTempScores(hand));
-                scoreBox.setModel(model);
+                UpdateScoreBox();
                 UpdateScores(yahtzee.GetScores());
                 }
                 if (yahtzee.isFull())
@@ -131,6 +139,7 @@ public class Simple
         });
         organizePanel.add(submitButton);
 
+        myFrame.getContentPane().setBackground(Color.DARK_GRAY);
         myFrame.setSize(1000, 700);
         myFrame.setLayout(new FlowLayout());
         myFrame.setVisible(true);
@@ -142,70 +151,82 @@ public class Simple
         for(int i = 0; i < 5; i++)
             diceButtons[i].setBorderPainted(false);
         ResetScoreLabels();
-        model = new DefaultComboBoxModel<String>(yahtzee.GetTempScores(hand));
-        scoreBox.setModel(model);
+        UpdateScoreBox();
         UpdateScores(yahtzee.GetScores());
         UpdateHand(hand);
     }
 
     public void CreateScores()
     {
-        scoreLabels[0] = new JLabel("3K                      0");
-        scoreLabels[1] = new JLabel("4K                      0");
-        scoreLabels[2] = new JLabel("FH                      0");
-        scoreLabels[3] = new JLabel("SS                      0");
-        scoreLabels[4] = new JLabel("LS                      0");
-        scoreLabels[5] = new JLabel("Y                      0");
-        scoreLabels[6] = new JLabel("C                      0");
+        scoreLabels[0] = new JLabel("1");
+        scoreLabels[1] = new JLabel("0");
+        scoreLabels[2] = new JLabel("2");
+        scoreLabels[3] = new JLabel("0");
+        scoreLabels[4] = new JLabel("3");
+        scoreLabels[5] = new JLabel("0");
+        scoreLabels[6] = new JLabel("4");
+        scoreLabels[7] = new JLabel("0");
+        scoreLabels[8] = new JLabel("5");
+        scoreLabels[9] = new JLabel("0");
+        scoreLabels[10] = new JLabel("6");
+        scoreLabels[11] = new JLabel("0");
 
-        scoreLabels[7] = new JLabel("Sub Total         0");
-        scoreLabels[8] = new JLabel("Bonus               0");
-        scoreLabels[9] = new JLabel("Upper Total      0");
+        scoreLabels[12] = new JLabel("Sub Total");
+        scoreLabels[13] = new JLabel("0");
+        scoreLabels[14] = new JLabel("Bonus");
+        scoreLabels[15] = new JLabel("0");
+        scoreLabels[16] = new JLabel("Upper Total");
+        scoreLabels[17] = new JLabel("0");
 
-        scoreLabels[10] = new JLabel("1                      0");
-        scoreLabels[11] = new JLabel("2                      0");
-        scoreLabels[12] = new JLabel("3                      0");
-        scoreLabels[13] = new JLabel("4                      0");
-        scoreLabels[14] = new JLabel("5                      0");
-        scoreLabels[15] = new JLabel("6                      0");
+        scoreLabels[18] = new JLabel("3K");
+        scoreLabels[19] = new JLabel("0");
+        scoreLabels[20] = new JLabel("4K");
+        scoreLabels[21] = new JLabel("0");
+        scoreLabels[22] = new JLabel("FH");
+        scoreLabels[23] = new JLabel("0");
+        scoreLabels[24] = new JLabel("SS");
+        scoreLabels[25] = new JLabel("0");
+        scoreLabels[26] = new JLabel("LS");
+        scoreLabels[27] = new JLabel("0");
+        scoreLabels[28] = new JLabel("Y");
+        scoreLabels[29] = new JLabel("0");
+        scoreLabels[30] = new JLabel("C");
+        scoreLabels[31] = new JLabel("0");
 
-        scoreLabels[16] = new JLabel("Lower Total     0");
-        scoreLabels[17] = new JLabel("Grand Total      0");
+        scoreLabels[32] = new JLabel("Lower Total");
+        scoreLabels[33] = new JLabel("0");
+        scoreLabels[34] = new JLabel("Grand Total");
+        scoreLabels[35] = new JLabel("0");
 
-        for (int i = 0; i < 18; i++)
+        for (int i = 1; i < 36; i += 2)
+            scoreLabels[i].setHorizontalAlignment(SwingConstants.RIGHT);
+
+        for (int i = 0; i < 36; i++)
+        {
+            scoreLabels[i].setForeground(Color.WHITE);
             scorePanel.add(scoreLabels[i]);
+        }
         scorePanel.setVisible(true);
     }
 
     public void ResetScoreLabels()
     {
-        scoreLabels[0].setText("3K                      0");
-        scoreLabels[1].setText("4K                      0");
-        scoreLabels[2].setText("FH                      0");
-        scoreLabels[3].setText("SS                      0");
-        scoreLabels[4].setText("LS                      0");
-        scoreLabels[5].setText("Y                      0");
-        scoreLabels[6].setText("C                      0");
-
-        scoreLabels[7].setText("Sub Total         0");
-        scoreLabels[8].setText("Bonus               0");
-        scoreLabels[9].setText("Upper Total      0");
-
-        scoreLabels[10].setText("1                      0");
-        scoreLabels[11].setText("2                      0");
-        scoreLabels[12].setText("3                      0");
-        scoreLabels[13].setText("4                      0");
-        scoreLabels[14].setText("5                      0");
-        scoreLabels[15].setText("6                      0");
-
-        scoreLabels[16].setText("Lower Total     0");
-        scoreLabels[17].setText("Grand Total      0");
+        for (int i = 1; i < 36; i += 2)
+            scoreLabels[i].setText("0");
     }
 
     public void UpdateScores(String[] scores)
     {
-        for (int i = 0; i < 18; i++)
-            scoreLabels[i].setText(scores[i]);
+        for (int i = 1, j = 0; i < 36; i += 2, j++)
+            scoreLabels[i].setText(scores[j]);
+    }
+
+    public void UpdateScoreBox()
+    {
+        int selectedIndex = scoreBox.getSelectedIndex();
+        model = new DefaultComboBoxModel<String>(yahtzee.GetTempScores(hand));
+        scoreBox.setModel(model);
+        scoreBox.setSelectedIndex(selectedIndex);
     }
 
     public void CreateHand(Hand hand)
@@ -214,8 +235,9 @@ public class Simple
         {
             diceButtons[i] = new JButton(images[hand.GetDie(i)-1]);
             diceButtons[i].setPreferredSize(new Dimension(100, 100));
-            diceButtons[i].setBorder(BorderFactory.createBevelBorder(1, Color.RED, Color.RED));
+            diceButtons[i].setBorder(BorderFactory.createLineBorder(DarkGreen, 3));
             diceButtons[i].setBorderPainted(false);
+            diceButtons[i].setVerticalAlignment(SwingConstants.CENTER);
             diceButtons[i].addActionListener(new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)

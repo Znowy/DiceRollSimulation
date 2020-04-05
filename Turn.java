@@ -1,30 +1,11 @@
 import java.util.ArrayList;
 
-import javax.lang.model.util.ElementScanner6;
-
-/**
- * This program plays one round of yahtzee
- * This is the Turn class that controls the scoring of a turn
- * CPSC 224, Spring 2020
- * Programming Assignment #2
- * No sources to cite.
- *
- * @author Sophie Braun
- * 2/13/19
- */
-
 public class Turn {
-    //private static ArrayList<Integer> scores;
-    public static ArrayList<Integer> scores = new ArrayList<>();
-    //public int numSides = game.getNumSides();
-    //public int numDie = game.getNumDice();
+    public ArrayList<Integer> scores = new ArrayList<>();
     public ArrayList<Element> cardList = new ArrayList<Element>();
-    public static String lowerScorecard = "";
-    public static String upperScorecard = "";
+    public String lowerScorecard = "";
+    public String upperScorecard = "";
 
-    /**
-     * Constructor that tells the user they have an empty hand
-     */
     Turn() {
 
     }
@@ -37,10 +18,6 @@ public class Turn {
         upperScorecard = "";
     }
 
-    /**
-     * this function represents the upper score card of the game Yahtzee
-     * @return a String showing the upperScoreCard results
-     */
     public String[] upperScoreCard(ArrayList<Element> cList, Hand hand) {
         String[] upperScorecard = new String[6];
         for (int dieValue = 1; dieValue <= 6; dieValue++) {
@@ -62,10 +39,6 @@ public class Turn {
         return upperScorecard;
     };
 
-    /**
-     * represents the lower score card of the game Yahtzee
-     * @return a String of the lowerScoreCard possible options
-     */
     public String[] lowerScoreCard(ArrayList<Element> cList, Hand hand) {
         String[] lowerScorecard = new String[7];
 
@@ -189,10 +162,6 @@ public class Turn {
         return lowerScorecard;
     }
 
-    /**
-     * determines the max number of a kind is found in a hand
-     * @return maxCount - the maximum number of repeated numbers in hand
-     */
     private int maxOfAKindFound(Hand hand) {
         int max = 0;
         int count;
@@ -209,11 +178,6 @@ public class Turn {
         }
         return max;
     }
-
-    /**
-     * finds the max number of a straight
-     * @return maxLength - the max length of a straight
-     */
 
     private int maxStraightFound(Hand hand) {
         int maxLength = 1;
@@ -238,10 +202,6 @@ public class Turn {
         return maxLength;
     }
 
-    /**
-     * checks for a full house
-     * @return true if there is a full house, false if not
-     */
     private boolean fullHouseFound(Hand hand) {
         boolean fullHouse = false;
         boolean threeOfKind = false;
@@ -266,10 +226,6 @@ public class Turn {
         return fullHouse;
     }
 
-    /**
-     * Sums the dice in the hand
-     * @return the sum of the dice
-     */
     private int sumOfDie(Hand hand) {
         int sum = 0;
         for (int diePosition = 0; diePosition < 5; diePosition++)
@@ -279,18 +235,14 @@ public class Turn {
         return sum;
     }
 
-    public static String getLowerScorecard() {
+    public String getLowerScorecard() {
         return lowerScorecard;
     }
 
     public void setLowerScorecard(String lowerScorecard) {
         this.lowerScorecard = lowerScorecard;
     }
-/*
-    public ArrayList<String> getUpperScorecard() {
-        return upperScorecard;
-    }
-*/
+
     public void setUpperScorecard(String upperScorecard) {
         this.upperScorecard = upperScorecard;
     }
@@ -302,9 +254,4 @@ public class Turn {
     public void setScores(ArrayList<Integer> scores) {
         this.scores = scores;
     }
-/*
-    @Override
-    public String toString() {
-        return upperScoreCard(upperScorecard) + lowerScoreCard(lowerScorecard);
-    }*/
 }

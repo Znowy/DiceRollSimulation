@@ -6,10 +6,6 @@ public class Hand
 {
     private ArrayList<Integer> handArray = new ArrayList<Integer>();
 
-    //private int numSides;
-    //private int numDice;
-    //private int numRolls;
-
     Hand()
     {
         InitializeDice();

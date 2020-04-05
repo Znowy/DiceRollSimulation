@@ -11,18 +11,10 @@ public class Element {
         this.score = score;
     }
 
-    /**
-     * getter to get the name
-     * @return the name in element
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * setter for the name
-     * @param name passes in the name as a param
-     */
     public void setName(String name) {
         this.name = name;
     }
